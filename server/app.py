@@ -52,6 +52,10 @@ def create_workout():
         return make_response(jsonify(errors), 400)
 
     try:
+        from datetime import date
+        if 'date' in data and isinstance(data['date'], str):
+            data['date'] = date.fromisoformat(data['date'])
+
         workout = Workout(**data)
         db.session.add(workout)
         db.session.commit()
